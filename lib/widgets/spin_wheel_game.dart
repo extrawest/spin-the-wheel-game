@@ -21,16 +21,20 @@ class _SpinWheelGameState extends State<SpinWheelGame> {
         children: [
           Image.asset(fortuneWheelTitle),
           const SizedBox(height: 24),
-          SpinningWheel(
-            Image.asset(spinningWheel),
-            width: MediaQuery.of(context).size.width,
-            height: 500,
-            dividers: 6,
-            canInteractWhileSpinning: false,
-            secondaryImage: Image.asset(spinningPointer),
-            secondaryImageHeight: 50,
-            secondaryImageWidth: 50,
-            secondaryImageTop: 0,
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+            ),
+            child: SpinningWheel(
+              Image.asset(spinningWheel2),
+              width: MediaQuery.of(context).size.width,
+              height: 500,
+              dividers: 6,
+              canInteractWhileSpinning: false,
+              secondaryImage: Image.asset(spinningPointer),
+              secondaryImageHeight: 50,
+              secondaryImageWidth: 50,
+            ),
           ),
           const SizedBox(height: 24),
           const SpinButton(),
