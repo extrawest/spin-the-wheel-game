@@ -80,8 +80,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: fa28203e358a1a053450337e5b54111b17e1c0e0
+      ref: null-safety-migration
+      resolved-ref: fc65ba807ada392d1e57dfddd5eb2f5cf6dd9744
       url: "https://github.com/kevingamboa17/flutter-spinning-wheel.git"
     source: git
     version: "1.1.0"

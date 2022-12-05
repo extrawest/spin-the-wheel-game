@@ -38,7 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.1
   flutter_spinning_wheel:
-    git: https://github.com/kevingamboa17/flutter-spinning-wheel.git
+    git:
+      url: https://github.com/kevingamboa17/flutter-spinning-wheel.git
+      ref: null-safety-migration
+
 
 dev_dependencies:
   flutter_test:
