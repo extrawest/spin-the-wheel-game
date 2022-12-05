@@ -83,6 +83,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_spinning_wheel:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: fa28203e358a1a053450337e5b54111b17e1c0e0
+      url: "https://github.com/kevingamboa17/flutter-spinning-wheel.git"
+    source: git
+    version: "1.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

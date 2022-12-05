@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flame: ^1.5.0
   flutter_bloc: ^8.1.1
+  flutter_spinning_wheel:
+    git: https://github.com/kevingamboa17/flutter-spinning-wheel.git
 
 dev_dependencies:
   flutter_test:
@@ -62,8 +64,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-   assets:
-     - assets/images/
+  assets:
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
