@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/widgets/spin_button.dart';
 
@@ -15,10 +16,18 @@ class _SpinWheelGameState extends State<SpinWheelGame> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(fortuneWheelTitle),
+          const SizedBox(height: 24),
+          SpinningWheel(
+            Image.asset(spinningWheel),
+            width: MediaQuery.of(context).size.width,
+            height: 500,
+            dividers: 6,
+            canInteractWhileSpinning: false,
+          ),
           const SizedBox(height: 24),
           const SpinButton(),
         ],
