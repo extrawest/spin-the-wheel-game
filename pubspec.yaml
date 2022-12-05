@@ -36,7 +36,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flame: ^1.5.0
   flutter_bloc: ^8.1.1
   flutter_spinning_wheel:
     git: https://github.com/kevingamboa17/flutter-spinning-wheel.git
