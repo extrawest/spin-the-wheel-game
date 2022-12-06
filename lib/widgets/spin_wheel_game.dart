@@ -8,7 +8,6 @@ import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/utils.dart';
 import 'package:spin_wheel_game/widgets/spin_button.dart';
 
-
 const _horizontalPaddingValue = 24.0;
 
 class SpinWheelGame extends StatefulWidget {
