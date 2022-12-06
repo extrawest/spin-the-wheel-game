@@ -6,8 +6,9 @@ import 'package:spin_wheel_game/widgets/gradient_text.dart';
 
 class PrizeDialog extends StatefulWidget {
   final Prize prize;
+  final bool isJackpot;
 
-  const PrizeDialog({required this.prize, Key? key}) : super(key: key);
+  const PrizeDialog({required this.prize, this.isJackpot = false, Key? key}) : super(key: key);
 
   @override
   State<PrizeDialog> createState() => _PrizeDialogState();
@@ -20,6 +21,7 @@ class _PrizeDialogState extends State<PrizeDialog> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
+      width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
         border: Border.all(color: orange2, width: 15.0),
@@ -37,36 +39,37 @@ class _PrizeDialogState extends State<PrizeDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(congratsText),
+          if (widget.isJackpot) Image.asset(jackPot) else Image.asset(congratsText),
           const SizedBox(height: 16),
           Stack(
             children: [
               Image.asset(widget.prize.asset, height: 70),
-              Positioned(
-                top: 20,
-                left: 35,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(star),
-                      fit: BoxFit.fitWidth,
+              if (!widget.isJackpot)
+                Positioned(
+                  top: 20,
+                  left: 35,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(star),
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'x${widget.prize.multiplier}',
-                      style: const TextStyle(fontFamily: 'Gluten', fontSize: 16),
+                    child: Center(
+                      child: Text(
+                        'x${widget.prize.multiplier}',
+                        style: const TextStyle(fontFamily: 'Gluten', fontSize: 16),
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
           const SizedBox(height: 8),
           GradientText(
-            widget.prize.description,
+            widget.isJackpot ? widget.prize.name : widget.prize.description,
             style: const TextStyle(
               fontFamily: 'Gluten',
               fontSize: 20,

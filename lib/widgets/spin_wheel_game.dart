@@ -19,13 +19,11 @@ class SpinWheelGame extends StatefulWidget {
 }
 
 class _SpinWheelGameState extends State<SpinWheelGame> {
-  final StreamController<int> _dividerController = StreamController<int>();
   final StreamController<double> _wheelNotifier = StreamController<double>();
 
   @override
   void dispose() {
     _wheelNotifier.close();
-    _dividerController.close();
     super.dispose();
   }
 
@@ -34,7 +32,6 @@ class _SpinWheelGameState extends State<SpinWheelGame> {
     return MultiProvider(
       providers: [
         Provider(create: (context) => _wheelNotifier),
-        Provider(create: (context) => _dividerController),
       ],
       child: const _SpinWheelGameContent(),
     );
@@ -55,6 +52,7 @@ class _SpinWheelGameContent extends StatelessWidget {
           Image.asset(fortuneWheelTitle),
           const SizedBox(height: 24),
           AbsorbPointer(
+            absorbing: false,
             child: SpinningWheel(
               Image.asset(spinningWheelFilled),
               width: MediaQuery.of(context).size.width,
@@ -69,15 +67,14 @@ class _SpinWheelGameContent extends StatelessWidget {
               shouldStartOrStop: context.read<StreamController<double>>().stream,
               spinResistance: 0.1,
               initialSpinAngle: generateRandomAngle(),
-              onUpdate: context.read<StreamController<int>>().add,
               onEnd: (value) {
                 context.read<SpinWheelCubit>().setIsSpinning(false);
-                context.read<StreamController<int>>().add(value);
                 showDialog(
                   context: context,
                   builder: (_) => Center(
                     child: PrizeDialog(
-                      prize: prizes[context.read<StreamController<int>>().stream.first]!,
+                      prize: prizes[value]!,
+                      isJackpot: value == 2,
                     ),
                   ),
                 );
@@ -85,11 +82,6 @@ class _SpinWheelGameContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          StreamBuilder(
-            stream: context.read<StreamController<int>>().stream,
-            builder: (context, snapshot) =>
-            snapshot.hasData ? Text('${snapshot.data}') : Container(),
-          ),
           const SpinButton(),
         ],
       ),

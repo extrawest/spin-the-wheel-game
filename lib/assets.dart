@@ -14,3 +14,5 @@ const star = 'assets/images/star.png';
 const flash = 'assets/images/flash.png';
 const dollar = 'assets/images/dollar.png';
 const diamond = 'assets/images/diamond.png';
+const crown = 'assets/images/crown.png';
+const jackPot = 'assets/images/jackpot.png';

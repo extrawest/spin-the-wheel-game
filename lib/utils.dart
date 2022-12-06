@@ -9,9 +9,10 @@ double generateRandomAngle() => Random().nextDouble() * pi * 2;
 
 Map<int, Prize> prizes = {
   1: Prize(asset: heart, multiplier: 1, name: 'live'),
-  2: Prize(asset: flash, multiplier: 3, name: 'powers'),
-  3: Prize(asset: dollar, multiplier: 2, name: 'dollars'),
-  4: Prize(asset: flash, multiplier: 4, name: 'powers'),
-  5: Prize(asset: heart, multiplier: 4, name: 'lives'),
-  6: Prize(asset: diamond, multiplier: 1, name: 'diamond'),
+  2: Prize(asset: crown, multiplier: 1, name: 'Jackpot'),
+  3: Prize(asset: diamond, multiplier: 1, name: 'diamond'),
+  4: Prize(asset: heart, multiplier: 4, name: 'lives'),
+  5: Prize(asset: flash, multiplier: 4, name: 'powers'),
+  6: Prize(asset: dollar, multiplier: 2, name: 'dollars'),
+  7: Prize(asset: flash, multiplier: 3, name: 'powers'),
 };
