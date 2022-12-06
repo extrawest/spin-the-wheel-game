@@ -11,3 +11,6 @@ const okButtonPressed = 'assets/images/ok_button_pressed.png';
 
 const heart = 'assets/images/heart.png';
 const star = 'assets/images/star.png';
+const flash = 'assets/images/flash.png';
+const dollar = 'assets/images/dollar.png';
+const diamond = 'assets/images/diamond.png';

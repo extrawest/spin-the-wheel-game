@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 import 'package:provider/provider.dart';
 import 'package:spin_wheel_game/assets.dart';
-import 'package:spin_wheel_game/models/prize.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/utils.dart';
 import 'package:spin_wheel_game/widgets/prize_dialog.dart';
@@ -20,7 +19,7 @@ class SpinWheelGame extends StatefulWidget {
 }
 
 class _SpinWheelGameState extends State<SpinWheelGame> {
-  final StreamController _dividerController = StreamController<int>();
+  final StreamController<int> _dividerController = StreamController<int>();
   final StreamController<double> _wheelNotifier = StreamController<double>();
 
   @override
@@ -32,8 +31,11 @@ class _SpinWheelGameState extends State<SpinWheelGame> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => _wheelNotifier,
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => _wheelNotifier),
+        Provider(create: (context) => _dividerController),
+      ],
       child: const _SpinWheelGameContent(),
     );
   }
@@ -67,13 +69,15 @@ class _SpinWheelGameContent extends StatelessWidget {
               shouldStartOrStop: context.read<StreamController<double>>().stream,
               spinResistance: 0.1,
               initialSpinAngle: generateRandomAngle(),
+              onUpdate: context.read<StreamController<int>>().add,
               onEnd: (value) {
                 context.read<SpinWheelCubit>().setIsSpinning(false);
+                context.read<StreamController<int>>().add(value);
                 showDialog(
                   context: context,
                   builder: (_) => Center(
                     child: PrizeDialog(
-                      prize: Prize(asset: heart, multiplier: 2, name: 'lives'),
+                      prize: prizes[context.read<StreamController<int>>().stream.first]!,
                     ),
                   ),
                 );
@@ -81,6 +85,11 @@ class _SpinWheelGameContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          StreamBuilder(
+            stream: context.read<StreamController<int>>().stream,
+            builder: (context, snapshot) =>
+            snapshot.hasData ? Text('${snapshot.data}') : Container(),
+          ),
           const SpinButton(),
         ],
       ),
