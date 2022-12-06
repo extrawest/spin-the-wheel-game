@@ -56,31 +56,33 @@ class _SpinWheelGameContent extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
             ),
-            child: SpinningWheel(
-              Image.asset(spinningWheelFilled),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width - (_horizontalPaddingValue * 2),
-              dividers: 7,
-              canInteractWhileSpinning: false,
-              secondaryImage: Image.asset(spinningPointer),
-              secondaryImageHeight: 50,
-              secondaryImageWidth: 50,
-              secondaryImageTop: 0,
-              secondaryImageLeft: MediaQuery.of(context).size.width / 2 - _horizontalPaddingValue * 2,
-              shouldStartOrStop: context.read<StreamController<double>>().stream,
-              spinResistance: 0.1,
-              initialSpinAngle: generateRandomAngle(),
-              onEnd: (value) {
-                context.read<SpinWheelCubit>().setIsSpinning(false);
-                showDialog(
-                  context: context,
-                  builder: (_) => Center(
-                    child: PrizeDialog(
-                      prize: Prize(asset: heart, multiplier: 2, name: 'lives'),
+            child: AbsorbPointer(
+              child: SpinningWheel(
+                Image.asset(spinningWheelFilled),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width - (_horizontalPaddingValue * 2),
+                dividers: 7,
+                canInteractWhileSpinning: false,
+                secondaryImage: Image.asset(spinningPointer),
+                secondaryImageHeight: 50,
+                secondaryImageWidth: 50,
+                secondaryImageTop: 0,
+                secondaryImageLeft: MediaQuery.of(context).size.width / 2 - _horizontalPaddingValue * 2,
+                shouldStartOrStop: context.read<StreamController<double>>().stream,
+                spinResistance: 0.1,
+                initialSpinAngle: generateRandomAngle(),
+                onEnd: (value) {
+                  context.read<SpinWheelCubit>().setIsSpinning(false);
+                  showDialog(
+                    context: context,
+                    builder: (_) => Center(
+                      child: PrizeDialog(
+                        prize: Prize(asset: heart, multiplier: 2, name: 'lives'),
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
           const SizedBox(height: 24),
