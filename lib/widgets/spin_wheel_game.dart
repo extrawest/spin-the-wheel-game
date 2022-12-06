@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
 import 'package:provider/provider.dart';
 import 'package:spin_wheel_game/assets.dart';
+import 'package:spin_wheel_game/models/prize.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/utils.dart';
+import 'package:spin_wheel_game/widgets/prize_dialog.dart';
 import 'package:spin_wheel_game/widgets/spin_button.dart';
 
 const _horizontalPaddingValue = 24.0;
@@ -70,6 +72,14 @@ class _SpinWheelGameContent extends StatelessWidget {
               initialSpinAngle: generateRandomAngle(),
               onEnd: (value) {
                 context.read<SpinWheelCubit>().setIsSpinning(false);
+                showDialog(
+                  context: context,
+                  builder: (_) => Center(
+                    child: PrizeDialog(
+                      prize: Prize(asset: heart, multiplier: 2, name: 'lives'),
+                    ),
+                  ),
+                );
               },
             ),
           ),

@@ -1,11 +1,14 @@
 class Prize {
   final String asset;
   final int multiplier;
-  final String description;
+  final String name;
+  late final String description;
 
-  const Prize({
+  Prize({
     required this.asset,
     required this.multiplier,
-    required this.description,
-  });
+    required this.name,
+  }) {
+    description = "You've got $multiplier more $name";
+  }
 }
