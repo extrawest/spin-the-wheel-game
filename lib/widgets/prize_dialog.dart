@@ -42,7 +42,26 @@ class _PrizeDialogState extends State<PrizeDialog> {
           Stack(
             children: [
               Image.asset(widget.prize.asset, height: 70),
-              Positioned(top: 20, left: 35, child: Image.asset(star, width: 50)),
+              Positioned(
+                top: 20,
+                left: 35,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(star),
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'x${widget.prize.multiplier}',
+                      style: const TextStyle(fontFamily: 'Gluten', fontSize: 16),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 8),
@@ -71,7 +90,7 @@ class _PrizeDialogState extends State<PrizeDialog> {
             },
             child: Image.asset(
               _isOkButtonPressed ? okButtonPressed : okButton,
-              width: 150,
+              width: 120,
             ),
           ),
         ],
