@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
@@ -38,53 +39,148 @@ class _SpinWheelGameState extends State<SpinWheelGame> {
   }
 }
 
-class _SpinWheelGameContent extends StatelessWidget {
+class _SpinWheelGameContent extends StatefulWidget {
   const _SpinWheelGameContent({Key? key}) : super(key: key);
 
   @override
+  State<_SpinWheelGameContent> createState() => _SpinWheelGameContentState();
+}
+
+class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with TickerProviderStateMixin {
+  late final AnimationController _defaultLottieController;
+
+  late final AnimationController _coinsLottieController;
+
+  late final AnimationController _goldenConfettiLottieController;
+
+  @override
+  void initState() {
+    _defaultLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
+    _coinsLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
+    _goldenConfettiLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _defaultLottieController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: _horizontalPaddingValue),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: _horizontalPaddingValue),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(fortuneWheelTitle),
+              const SizedBox(height: 24),
+              AbsorbPointer(
+                child: SpinningWheel(
+                  Image.asset(spinningWheelFilled),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width - (_horizontalPaddingValue * 2),
+                  dividers: 7,
+                  canInteractWhileSpinning: false,
+                  secondaryImage: Image.asset(spinningPointer),
+                  secondaryImageHeight: 50,
+                  secondaryImageWidth: 50,
+                  secondaryImageTop: 0,
+                  secondaryImageLeft: MediaQuery.of(context).size.width / 2 - _horizontalPaddingValue * 2,
+                  shouldStartOrStop: context.read<StreamController<double>>().stream,
+                  spinResistance: 0.1,
+                  initialSpinAngle: generateRandomAngle(),
+                  onEnd: (prizeIndex) {
+                    context.read<SpinWheelCubit>().setIsSpinning(false);
+                    _showPrizeDialog(context, prizeIndex);
+                    _playLottie(prizeIndex);
+                  },
+                ),
+              ),
+              const SizedBox(height: 24),
+              const SpinButton(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showPrizeDialog(BuildContext context, int prizeIndex) {
+    showDialog(
+      context: context,
+      builder: (_) => Stack(
         children: [
-          Image.asset(fortuneWheelTitle),
-          const SizedBox(height: 24),
-          AbsorbPointer(
-            absorbing: false,
-            child: SpinningWheel(
-              Image.asset(spinningWheelFilled),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width - (_horizontalPaddingValue * 2),
-              dividers: 7,
-              canInteractWhileSpinning: false,
-              secondaryImage: Image.asset(spinningPointer),
-              secondaryImageHeight: 50,
-              secondaryImageWidth: 50,
-              secondaryImageTop: 0,
-              secondaryImageLeft: MediaQuery.of(context).size.width / 2 - _horizontalPaddingValue * 2,
-              shouldStartOrStop: context.read<StreamController<double>>().stream,
-              spinResistance: 0.1,
-              initialSpinAngle: generateRandomAngle(),
-              onEnd: (value) {
-                context.read<SpinWheelCubit>().setIsSpinning(false);
-                showDialog(
-                  context: context,
-                  builder: (_) => Center(
-                    child: PrizeDialog(
-                      prize: prizes[value]!,
-                      isJackpot: value == 2,
-                    ),
-                  ),
-                );
-              },
+          Center(
+            child: PrizeDialog(
+              prize: prizes[prizeIndex]!,
+              isJackpot: prizeIndex == 2,
             ),
           ),
-          const SizedBox(height: 24),
-          const SpinButton(),
+          ..._buildLotties(),
         ],
       ),
     );
+  }
+  
+  List<Widget> _buildLotties() {
+    return [
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: IgnorePointer(
+              child: Lottie.asset(
+                defaultLottie,
+                controller: _defaultLottieController,
+                height: 800,
+                width: 600,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: IgnorePointer(
+              child: Lottie.asset(
+                goldenConfettiLottie,
+                controller: _coinsLottieController,
+                height: 800,
+                width: 600,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: IgnorePointer(
+              child: Lottie.asset(
+                coinsLottie,
+                controller: _goldenConfettiLottieController,
+                fit: BoxFit.fill,
+                height: 800,
+              ),
+            ),
+          ),
+        ),
+      ];
+  }
+
+  void _playLottie(int prizeIndex) {
+    if(prizeIndex == 2) {
+      _goldenConfettiLottieController.forward().then((value) => _goldenConfettiLottieController.reset());
+    } else if(prizeIndex == 3 || prizeIndex == 6) {
+      _coinsLottieController.forward().then((value) => _coinsLottieController.reset());
+    } else {
+      _defaultLottieController.forward().then((value) => _defaultLottieController.reset());
+    }
   }
 }

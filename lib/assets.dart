@@ -16,3 +16,8 @@ const dollar = 'assets/images/dollar.png';
 const diamond = 'assets/images/diamond.png';
 const crown = 'assets/images/crown.png';
 const jackPot = 'assets/images/jackpot.png';
+
+/// Lotties
+const defaultLottie = 'assets/lotties/default_lottie.json';
+const coinsLottie = 'assets/lotties/coins_lottie.json';
+const goldenConfettiLottie = 'assets/lotties/golden_lottie.json';
