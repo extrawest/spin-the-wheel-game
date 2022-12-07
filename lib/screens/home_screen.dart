@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/widgets/spin_wheel_game.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,8 +7,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SpinWheelGame(),
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(backgroundImage),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: const SpinWheelGame(),
+      ),
     );
   }
 }
