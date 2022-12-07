@@ -60,7 +60,7 @@ class _PrizeDialogState extends State<PrizeDialog> {
                     child: Center(
                       child: Text(
                         'x${widget.prize.multiplier}',
-                        style: const TextStyle(fontFamily: 'Gluten', fontSize: 16),
+                        style: TextStyles.bodyReg16,
                       ),
                     ),
                   ),
@@ -70,11 +70,7 @@ class _PrizeDialogState extends State<PrizeDialog> {
           const SizedBox(height: 8),
           GradientText(
             widget.isJackpot ? widget.prize.name : widget.prize.description,
-            style: const TextStyle(
-              fontFamily: 'Gluten',
-              fontSize: 20,
-              color: lightOrange,
-            ),
+            style: TextStyles.bodyReg20,
             gradient: const LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
