@@ -20,10 +20,8 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
 
   @override
   void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 650));
-    _scaleAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.elasticInOut);
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 650));
+    _scaleAnimation = CurvedAnimation(parent: _controller, curve: Curves.elasticInOut);
 
     _controller.forward();
     super.initState();
@@ -98,11 +96,9 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
             ),
             const SizedBox(height: 16),
             GestureDetector(
-              onPanStart: (details) => setState(() => _isOkButtonPressed = true),
-              onPanEnd: (details) {
-                setState(() => _isOkButtonPressed = false);
-                Navigator.pop(context);
-              },
+              onTapDown: (details) => setState(() => _isOkButtonPressed = true),
+              onPanEnd: (details) => setState(() => _isOkButtonPressed = false),
+              onTap: () => Navigator.pop(context),
               child: Image.asset(
                 _isOkButtonPressed ? okButtonPressed : okButton,
                 width: 120,
