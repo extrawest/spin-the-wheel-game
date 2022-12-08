@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
-import 'package:spin_wheel_game/utils.dart';
 
 class SpinButton extends StatefulWidget {
   const SpinButton({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class _SpinButtonState extends State<SpinButton> {
         onTap: state.isSpinning
             ? null
             : () {
-                context.read<StreamController<double>>().sink.add(generateRandomVelocity());
+                context.read<StreamController<double>>().sink.add(context.read<SpinWheelCubit>().generateRandomVelocity());
                 context.read<SpinWheelCubit>().setIsSpinning(true);
               },
         child: SizedBox(
