@@ -84,10 +84,10 @@ class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with Ticke
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(flex: 1, child: Image.asset(fortuneWheelTitle)),
+                      Expanded(flex: 2, child: Image.asset(fortuneWheelTitle)),
                       const SizedBox(height: 24),
                       Expanded(
-                        flex: 7,
+                        flex: 6,
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(
                             maxWidth: 500,
@@ -144,9 +144,12 @@ class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with Ticke
       builder: (_) => Stack(
         children: [
           Center(
-            child: PrizeDialog(
-              prize: prizes[prizeIndex]!,
-              isJackpot: prizeIndex == 2,
+            child: SizedBox(
+              width: 500,
+              child: PrizeDialog(
+                prize: prizes[prizeIndex]!,
+                isJackpot: prizeIndex == 2,
+              ),
             ),
           ),
           ..._buildLotties(),

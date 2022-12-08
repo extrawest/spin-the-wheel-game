@@ -18,7 +18,7 @@
 
 ## Demo
 
-[Spin Wheel Game](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley)
+[Spin Wheel Game](https://lucky-spinwheel-game.web.app/#/)
 
 ### Installing:
 
