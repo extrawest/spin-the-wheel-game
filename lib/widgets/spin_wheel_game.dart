@@ -72,39 +72,66 @@ class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with Ticke
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPaddingValue),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(fortuneWheelTitle),
-              const SizedBox(height: 24),
-              AbsorbPointer(
-                child: SpinningWheel(
-                  Image.asset(spinningWheelFilled),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width - (_horizontalPaddingValue * 2),
-                  dividers: 7,
-                  canInteractWhileSpinning: false,
-                  secondaryImage: Image.asset(spinningPointer),
-                  secondaryImageHeight: 50,
-                  secondaryImageWidth: 50,
-                  secondaryImageTop: 0,
-                  secondaryImageLeft: MediaQuery.of(context).size.width / 2 - _horizontalPaddingValue * 2,
-                  shouldStartOrStop: context.read<StreamController<double>>().stream,
-                  spinResistance: 0.1,
-                  initialSpinAngle: generateRandomAngle(),
-                  onEnd: (prizeIndex) {
-                    context.read<SpinWheelCubit>().setIsSpinning(false);
-                    _showPrizeDialog(context, prizeIndex);
-                    _playLottie(prizeIndex);
-                  },
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: _horizontalPaddingValue),
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(flex: 2, child: Image.asset(fortuneWheelTitle)),
+                      const SizedBox(height: 24),
+                      Expanded(
+                        flex: 6,
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: 500,
+                          ),
+                          child: AbsorbPointer(
+                            child: Stack(
+                              children: [
+                                SpinningWheel(
+                                  Image.asset(spinningWheelFilled),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.width - (_horizontalPaddingValue * 2),
+                                  dividers: 7,
+                                  canInteractWhileSpinning: false,
+                                  shouldStartOrStop: context.read<StreamController<double>>().stream,
+                                  spinResistance: 0.1,
+                                  initialSpinAngle: generateRandomAngle(),
+                                  onEnd: (prizeIndex) {
+                                    context.read<SpinWheelCubit>().setIsSpinning(false);
+                                    _showPrizeDialog(context, prizeIndex);
+                                    _playLottie(prizeIndex);
+                                  },
+                                ),
+                                Positioned.fill(
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Image.asset(
+                                      spinningPointer,
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      const Expanded(flex: 2, child: SpinButton()),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              const SpinButton(),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -127,57 +154,57 @@ class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with Ticke
       ),
     );
   }
-  
+
   List<Widget> _buildLotties() {
     return [
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.center,
-            child: IgnorePointer(
-              child: Lottie.asset(
-                defaultLottie,
-                controller: _defaultLottieController,
-                height: 800,
-                width: 600,
-                fit: BoxFit.fill,
-              ),
+      Positioned.fill(
+        child: Align(
+          alignment: Alignment.center,
+          child: IgnorePointer(
+            child: Lottie.asset(
+              defaultLottie,
+              controller: _defaultLottieController,
+              height: 800,
+              width: 600,
+              fit: BoxFit.fill,
             ),
           ),
         ),
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: IgnorePointer(
-              child: Lottie.asset(
-                goldenConfettiLottie,
-                controller: _coinsLottieController,
-                height: 800,
-                width: 600,
-                fit: BoxFit.fill,
-              ),
+      ),
+      Positioned.fill(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: IgnorePointer(
+            child: Lottie.asset(
+              goldenConfettiLottie,
+              controller: _coinsLottieController,
+              height: 800,
+              width: 600,
+              fit: BoxFit.fill,
             ),
           ),
         ),
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: IgnorePointer(
-              child: Lottie.asset(
-                coinsLottie,
-                controller: _goldenConfettiLottieController,
-                fit: BoxFit.fill,
-                height: 800,
-              ),
+      ),
+      Positioned.fill(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: IgnorePointer(
+            child: Lottie.asset(
+              coinsLottie,
+              controller: _goldenConfettiLottieController,
+              fit: BoxFit.fill,
+              height: 800,
             ),
           ),
         ),
-      ];
+      ),
+    ];
   }
 
   void _playLottie(int prizeIndex) {
-    if(prizeIndex == 2) {
+    if (prizeIndex == 2) {
       _goldenConfettiLottieController.forward().then((value) => _goldenConfettiLottieController.reset());
-    } else if(prizeIndex == 3 || prizeIndex == 6) {
+    } else if (prizeIndex == 3 || prizeIndex == 6) {
       _coinsLottieController.forward().then((value) => _coinsLottieController.reset());
     } else {
       _defaultLottieController.forward().then((value) => _defaultLottieController.reset());

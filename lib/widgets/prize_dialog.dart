@@ -4,6 +4,8 @@ import 'package:spin_wheel_game/models/prize.dart';
 import 'package:spin_wheel_game/theme.dart';
 import 'package:spin_wheel_game/widgets/gradient_text.dart';
 
+const okButtonKey = 'OkButton';
+
 class PrizeDialog extends StatefulWidget {
   final Prize prize;
   final bool isJackpot;
@@ -96,6 +98,7 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
             ),
             const SizedBox(height: 16),
             GestureDetector(
+              key: const ValueKey(okButtonKey),
               onTapDown: (details) => setState(() => _isOkButtonPressed = true),
               onPanEnd: (details) => setState(() => _isOkButtonPressed = false),
               onTap: () => Navigator.pop(context),

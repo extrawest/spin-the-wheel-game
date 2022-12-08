@@ -7,15 +7,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(backgroundImage),
-            fit: BoxFit.cover,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(backgroundImage),
+              fit: BoxFit.cover,
+            ),
           ),
+          child: const SpinWheelGame(),
         ),
-        child: const SpinWheelGame(),
       ),
     );
   }
