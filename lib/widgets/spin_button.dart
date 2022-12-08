@@ -31,11 +31,8 @@ class _SpinButtonState extends State<SpinButton> {
           cursor: _isHovered ? SystemMouseCursors.click : SystemMouseCursors.basic,
           onHover: (event) => setState(() => _isHovered = true),
           onExit: (event) => setState(() => _isHovered = false),
-          child: SizedBox(
-            height: 100,
-            child: Image.asset(
-              state.isSpinning ? spinButtonPressed : spinButton,
-            ),
+          child: Image.asset(
+            state.isSpinning ? spinButtonPressed : spinButton,
           ),
         ),
       ),

@@ -20,7 +20,7 @@ class CustomSpinningWheel extends StatefulWidget {
   State<CustomSpinningWheel> createState() => _CustomSpinningWheelState();
 }
 
-class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerProviderStateMixin{
+class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerProviderStateMixin {
   late final AnimationController _defaultLottieController;
 
   late final AnimationController _coinsLottieController;
@@ -28,7 +28,6 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
   late final AnimationController _goldenConfettiLottieController;
 
   final StreamController<double> _wheelNotifier = StreamController<double>();
-
 
   @override
   void initState() {
@@ -57,46 +56,52 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
           BlocConsumer<SpinWheelCubit, SpinWheelState>(
             listenWhen: (prev, curr) => prev.currentPrize != curr.currentPrize,
             listener: _spinListener,
-            builder: (context, state) => AbsorbPointer(
-              child: Stack(
-                children: [
-                  SpinningWheel(
-                    Image.asset(spinningWheelFilled),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.width - (horizontalPaddingValue * 2),
-                    dividers: 7,
-                    canInteractWhileSpinning: false,
-                    shouldStartOrStop: context.read<StreamController<double>>().stream,
-                    spinResistance: 0.1,
-                    initialSpinAngle: context.read<SpinWheelCubit>().generateRandomAngle(),
-                    onEnd: (prizeIndex) {
-                      context.read<SpinWheelCubit>().setIsSpinning(false);
-                      context.read<SpinWheelCubit>().setPrize(prizeIndex);
-                    },
-                  ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Image.asset(
-                        spinningPointer,
-                        width: 50,
-                        height: 50,
+            builder: (context, state) => Expanded(
+              flex: 8,
+              child: AbsorbPointer(
+                child: Stack(
+                  children: [
+                    SpinningWheel(
+                      Image.asset(spinningWheelFilled),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width - (horizontalPaddingValue * 2),
+                      dividers: 7,
+                      canInteractWhileSpinning: false,
+                      shouldStartOrStop: context.read<StreamController<double>>().stream,
+                      spinResistance: 0.1,
+                      initialSpinAngle: context.read<SpinWheelCubit>().generateRandomAngle(),
+                      onEnd: (prizeIndex) {
+                        context.read<SpinWheelCubit>().setIsSpinning(false);
+                        context.read<SpinWheelCubit>().setPrize(prizeIndex);
+                      },
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Image.asset(
+                          spinningPointer,
+                          width: 50,
+                          height: 50,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
           const SizedBox(height: 24),
-          const SpinButton(),
+          const Expanded(
+            flex: 2,
+            child: SpinButton(),
+          ),
         ],
       ),
     );
   }
 
   void _spinListener(BuildContext context, SpinWheelState state) {
-    if(state.currentPrize != null) {
+    if (state.currentPrize != null) {
       _showPrizeDialog(context, state);
       _playLottie(state.currentPrize!.lottie);
     }
