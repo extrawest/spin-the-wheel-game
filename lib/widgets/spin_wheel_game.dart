@@ -79,15 +79,15 @@ class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with Ticke
             child: CustomScrollView(
               slivers: [
                 SliverFillRemaining(
-                  hasScrollBody: false,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(flex: 2, child: Image.asset(fortuneWheelTitle)),
+                      Expanded(flex: 1, child: Image.asset(fortuneWheelTitle)),
                       const SizedBox(height: 24),
                       Expanded(
-                        flex: 6,
+                        flex: 7,
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(
                             maxWidth: 500,
