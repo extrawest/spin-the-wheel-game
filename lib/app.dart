@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spin_wheel_game/screens/home_screen.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
+import 'package:spin_wheel_game/widgets/pre_cache_images.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomeScreen(),
+        home: const PreCacheImages(),
       ),
     );
   }
