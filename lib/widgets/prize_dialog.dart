@@ -20,6 +20,8 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
   late final AnimationController _controller;
   late final Animation<double> _scaleAnimation;
 
+  bool _isHovered = false;
+
   @override
   void initState() {
     _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 650));
@@ -103,14 +105,19 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
               ),
             ),
             const SizedBox(height: 16),
-            GestureDetector(
-              key: const ValueKey(okButtonKey),
-              onTapDown: (details) => setState(() => _isOkButtonPressed = true),
-              onPanEnd: (details) => setState(() => _isOkButtonPressed = false),
-              onTap: () => Navigator.pop(context),
-              child: Image.asset(
-                _isOkButtonPressed ? okButtonPressed : okButton,
-                width: 120,
+            MouseRegion(
+              cursor: _isHovered ? SystemMouseCursors.click : SystemMouseCursors.basic,
+              onHover: (event) => setState(() => _isHovered = true),
+              onExit: (event) => setState(() => _isHovered = false),
+              child: GestureDetector(
+                key: const ValueKey(okButtonKey),
+                onTapDown: (details) => setState(() => _isOkButtonPressed = true),
+                onPanEnd: (details) => setState(() => _isOkButtonPressed = false),
+                onTap: () => Navigator.pop(context),
+                child: Image.asset(
+                  _isOkButtonPressed ? okButtonPressed : okButton,
+                  width: 120,
+                ),
               ),
             ),
           ],

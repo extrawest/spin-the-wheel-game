@@ -14,6 +14,8 @@ class SpinButton extends StatefulWidget {
 }
 
 class _SpinButtonState extends State<SpinButton> {
+  bool _isHovered = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SpinWheelCubit, SpinWheelState>(
@@ -24,10 +26,15 @@ class _SpinButtonState extends State<SpinButton> {
                 context.read<StreamController<double>>().sink.add(context.read<SpinWheelCubit>().generateRandomVelocity());
                 context.read<SpinWheelCubit>().setIsSpinning(true);
               },
-        child: SizedBox(
-          height: 100,
-          child: Image.asset(
-            state.isSpinning ? spinButtonPressed : spinButton,
+        child: MouseRegion(
+          cursor: _isHovered ? SystemMouseCursors.click : SystemMouseCursors.basic,
+          onHover: (event) => setState(() => _isHovered = true),
+          onExit: (event) => setState(() => _isHovered = false),
+          child: SizedBox(
+            height: 100,
+            child: Image.asset(
+              state.isSpinning ? spinButtonPressed : spinButton,
+            ),
           ),
         ),
       ),
