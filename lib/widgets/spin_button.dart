@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class SpinButton extends StatefulWidget {
   const SpinButton({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _SpinButtonState extends State<SpinButton> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SpinWheelCubit, SpinWheelState>(
-      builder: (context, state) => GestureDetector(
+      builder: (context, state) => ZoomTapAnimation(
         onTap: state.isSpinning
             ? null
             : () {

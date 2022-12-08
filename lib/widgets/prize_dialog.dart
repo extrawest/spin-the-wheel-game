@@ -3,6 +3,7 @@ import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/models/prize.dart';
 import 'package:spin_wheel_game/theme.dart';
 import 'package:spin_wheel_game/widgets/gradient_text.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 const okButtonKey = 'OkButton';
 
@@ -36,8 +37,6 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
     _controller.dispose();
     super.dispose();
   }
-
-  bool _isOkButtonPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -109,13 +108,11 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
               cursor: _isHovered ? SystemMouseCursors.click : SystemMouseCursors.basic,
               onHover: (event) => setState(() => _isHovered = true),
               onExit: (event) => setState(() => _isHovered = false),
-              child: GestureDetector(
+              child: ZoomTapAnimation(
                 key: const ValueKey(okButtonKey),
-                onTapDown: (details) => setState(() => _isOkButtonPressed = true),
-                onPanEnd: (details) => setState(() => _isOkButtonPressed = false),
                 onTap: () => Navigator.pop(context),
                 child: Image.asset(
-                  _isOkButtonPressed ? okButtonPressed : okButton,
+                  okButton,
                   width: 120,
                 ),
               ),
