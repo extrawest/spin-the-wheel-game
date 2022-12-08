@@ -64,6 +64,8 @@ class _SpinWheelGameContentState extends State<_SpinWheelGameContent> with Ticke
 
   @override
   void dispose() {
+    _coinsLottieController.dispose();
+    _goldenConfettiLottieController.dispose();
     _defaultLottieController.dispose();
     super.dispose();
   }

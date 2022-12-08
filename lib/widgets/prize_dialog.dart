@@ -29,6 +29,12 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   bool _isOkButtonPressed = false;
 
   @override
