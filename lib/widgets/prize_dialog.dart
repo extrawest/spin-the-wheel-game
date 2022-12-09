@@ -92,7 +92,7 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
             ),
             const SizedBox(height: 8),
             GradientText(
-              widget.isJackpot ? widget.prize.name : widget.prize.description,
+              widget.isJackpot ? widget.prize.prizeType.toString() : widget.prize.description,
               style: TextStyles.bodyReg20,
               gradient: const LinearGradient(
                 begin: Alignment.topCenter,

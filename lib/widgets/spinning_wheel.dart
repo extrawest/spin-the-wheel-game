@@ -74,20 +74,24 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
                   children: [
                     FortuneWheel(
                       selected: context.read<StreamController<int>>().stream,
-                      rotationCount: 4,
+                      rotationCount: state.rotationCount,
+                      indicators: const [],
                       items: List.generate(
                         prizes.length,
                         (index) => FortuneItem(
                           child: CustomFortuneItem(prize: prizes[index]!),
-                          style: const FortuneItemStyle(
-                            color: orange2,
+                          style: FortuneItemStyle(
+                            color: index % 2 == 0 ? orange2 : orange1,
+                            borderColor: darkOrange,
                           ),
                         ),
                       ),
                       onAnimationEnd: () {
                         context.read<SpinWheelCubit>().setIsSpinning(false);
+                        context.read<SpinWheelCubit>().updateRotationCount();
                       },
                     ),
+                    Image.asset(wheelBorder),
                     Positioned.fill(
                       child: Align(
                         alignment: Alignment.topCenter,
@@ -127,7 +131,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
               width: 500,
               child: PrizeDialog(
                 prize: state.currentPrize!,
-                isJackpot: state.currentPrize!.name == 'jackpot',
+                isJackpot: state.currentPrize!.prizeType == 'jackpot',
               ),
             ),
           ),

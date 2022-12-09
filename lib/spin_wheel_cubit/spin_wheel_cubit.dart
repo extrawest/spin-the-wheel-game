@@ -16,6 +16,10 @@ class SpinWheelCubit extends Cubit<SpinWheelState> {
     emit(state.copyWith(currentPrize: prizes[prizeIndex]));
   }
 
+  void updateRotationCount() {
+    emit(state.copyWith(rotationCount: Random().nextInt(100) + 50));
+  }
+
   double generateRandomVelocity() => (Random().nextDouble() * 3000) + 2000;
 
   double generateRandomAngle() => Random().nextDouble() * pi * 2;
