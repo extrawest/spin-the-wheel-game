@@ -118,7 +118,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
         children: [
           Center(
             child: SizedBox(
-              width: kIsWeb ? MediaQuery.of(context).size.width / 3 : 500,
+              width: 500,
               child: PrizeDialog(
                 prize: state.currentPrize!,
                 isJackpot: state.currentPrize!.name == 'jackpot',
