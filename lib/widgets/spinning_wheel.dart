@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/models/lottie_type.dart';
+import 'package:spin_wheel_game/models/prize_type.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
 import 'package:spin_wheel_game/theme.dart';
@@ -31,8 +32,6 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
 
   late final AnimationController _goldenConfettiLottieController;
 
-  final StreamController<double> _wheelNotifier = StreamController<double>();
-
   final StreamController<int> _fortuneWheelNotifier = StreamController<int>();
 
   @override
@@ -49,7 +48,6 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
     _coinsLottieController.dispose();
     _goldenConfettiLottieController.dispose();
     _defaultLottieController.dispose();
-    _wheelNotifier.close();
     _fortuneWheelNotifier.close();
     super.dispose();
   }
@@ -73,6 +71,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
                 child: Stack(
                   children: [
                     FortuneWheel(
+                      animateFirst: false,
                       selected: context.read<StreamController<int>>().stream,
                       rotationCount: state.rotationCount,
                       indicators: const [],
@@ -131,7 +130,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
               width: 500,
               child: PrizeDialog(
                 prize: state.currentPrize!,
-                isJackpot: state.currentPrize!.prizeType == 'jackpot',
+                isJackpot: state.currentPrize!.prizeType.isJackpot,
               ),
             ),
           ),

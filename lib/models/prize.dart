@@ -14,6 +14,6 @@ class Prize {
     required this.prizeType,
     required this.lottie,
   }) {
-    description = "You've got $multiplier more $prizeType";
+    description = "You've got $multiplier more ${prizeType.prizeToString()}";
   }
 }
