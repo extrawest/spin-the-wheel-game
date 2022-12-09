@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
@@ -12,6 +13,8 @@ import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
 import 'package:spin_wheel_game/widgets/prize_dialog.dart';
 import 'package:spin_wheel_game/widgets/spin_button.dart';
 import 'package:spin_wheel_game/widgets/spin_wheel_game.dart';
+
+const _wheelDiameter = 500.0;
 
 class CustomSpinningWheel extends StatefulWidget {
   const CustomSpinningWheel({Key? key}) : super(key: key);
@@ -56,13 +59,17 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
           BlocConsumer<SpinWheelCubit, SpinWheelState>(
             listenWhen: (prev, curr) => prev.currentPrize != curr.currentPrize,
             listener: _spinListener,
-            builder: (context, state) => Expanded(
-              flex: 8,
+            builder: (context, state) => ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxHeight: _wheelDiameter,
+                minWidth: _wheelDiameter,
+                minHeight: _wheelDiameter,
+              ),
               child: AbsorbPointer(
                 child: Stack(
                   children: [
                     SpinningWheel(
-                      Image.asset(spinningWheelFilled),
+                      Image.asset(spinningWheelFilled, width: _wheelDiameter, height: _wheelDiameter),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.width - (horizontalPaddingValue * 2),
                       dividers: 7,
@@ -91,10 +98,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
             ),
           ),
           const SizedBox(height: 24),
-          const Expanded(
-            flex: 2,
-            child: SpinButton(),
-          ),
+          const SpinButton(),
         ],
       ),
     );
@@ -114,7 +118,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
         children: [
           Center(
             child: SizedBox(
-              width: 500,
+              width: kIsWeb ? MediaQuery.of(context).size.width / 3 : 500,
               child: PrizeDialog(
                 prize: state.currentPrize!,
                 isJackpot: state.currentPrize!.name == 'jackpot',
@@ -136,7 +140,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
             child: Lottie.asset(
               defaultLottie,
               controller: _defaultLottieController,
-              height: 800,
+              height: MediaQuery.of(context).size.height,
               width: 600,
               fit: BoxFit.fill,
             ),
@@ -150,7 +154,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
             child: Lottie.asset(
               goldenConfettiLottie,
               controller: _coinsLottieController,
-              height: 800,
+              height: MediaQuery.of(context).size.height,
               width: 600,
               fit: BoxFit.fill,
             ),
@@ -165,7 +169,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
               coinsLottie,
               controller: _goldenConfettiLottieController,
               fit: BoxFit.fill,
-              height: 800,
+              height: MediaQuery.of(context).size.height,
             ),
           ),
         ),

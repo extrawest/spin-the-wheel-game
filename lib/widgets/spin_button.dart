@@ -33,6 +33,7 @@ class _SpinButtonState extends State<SpinButton> {
           onExit: (event) => setState(() => _isHovered = false),
           child: Image.asset(
             state.isSpinning ? spinButtonPressed : spinButton,
+            width: 300,
           ),
         ),
       ),
