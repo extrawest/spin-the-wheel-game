@@ -2,16 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinning_wheel/flutter_spinning_wheel.dart';
+import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/models/lottie_type.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
+import 'package:spin_wheel_game/utils.dart';
+import 'package:spin_wheel_game/widgets/fortune_item.dart';
 import 'package:spin_wheel_game/widgets/prize_dialog.dart';
 import 'package:spin_wheel_game/widgets/spin_button.dart';
-import 'package:spin_wheel_game/widgets/spin_wheel_game.dart';
 
 const _wheelDiameter = 500.0;
 
@@ -31,6 +32,8 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
 
   final StreamController<double> _wheelNotifier = StreamController<double>();
 
+  final StreamController<int> _fortuneWheelNotifier = StreamController<int>();
+
   @override
   void initState() {
     _defaultLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
@@ -46,13 +49,14 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
     _goldenConfettiLottieController.dispose();
     _defaultLottieController.dispose();
     _wheelNotifier.close();
+    _fortuneWheelNotifier.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<StreamController<double>>(
-      create: (context) => _wheelNotifier,
+    return Provider<StreamController<int>>(
+      create: (context) => _fortuneWheelNotifier,
       builder: (context, child) => Column(
         children: [
           BlocConsumer<SpinWheelCubit, SpinWheelState>(
@@ -67,19 +71,14 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
               child: AbsorbPointer(
                 child: Stack(
                   children: [
-                    SpinningWheel(
-                      Image.asset(spinningWheelFilled, width: _wheelDiameter, height: _wheelDiameter),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width - (horizontalPaddingValue * 2),
-                      dividers: 7,
-                      canInteractWhileSpinning: false,
-                      shouldStartOrStop: context.read<StreamController<double>>().stream,
-                      spinResistance: 0.1,
-                      initialSpinAngle: context.read<SpinWheelCubit>().generateRandomAngle(),
-                      onEnd: (prizeIndex) {
-                        context.read<SpinWheelCubit>().setIsSpinning(false);
-                        context.read<SpinWheelCubit>().setPrize(prizeIndex);
-                      },
+                    FortuneWheel(
+                      selected: context.read<StreamController<int>>().stream,
+                      items: List.generate(
+                        prizes.length,
+                        (index) => FortuneItem(
+                          child: CustomFortuneItem(prize: prizes[index]!)
+                        ),
+                      ),
                     ),
                     Positioned.fill(
                       child: Align(
