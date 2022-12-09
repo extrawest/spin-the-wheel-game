@@ -9,6 +9,7 @@ import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/models/lottie_type.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
+import 'package:spin_wheel_game/theme.dart';
 import 'package:spin_wheel_game/utils.dart';
 import 'package:spin_wheel_game/widgets/fortune_item.dart';
 import 'package:spin_wheel_game/widgets/prize_dialog.dart';
@@ -60,7 +61,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
       builder: (context, child) => Column(
         children: [
           BlocConsumer<SpinWheelCubit, SpinWheelState>(
-            listenWhen: (prev, curr) => prev.currentPrize != curr.currentPrize,
+            listenWhen: (prev, curr) => prev.isSpinning != curr.isSpinning,
             listener: _spinListener,
             builder: (context, state) => ConstrainedBox(
               constraints: const BoxConstraints(
@@ -73,12 +74,19 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
                   children: [
                     FortuneWheel(
                       selected: context.read<StreamController<int>>().stream,
+                      rotationCount: 4,
                       items: List.generate(
                         prizes.length,
                         (index) => FortuneItem(
-                          child: CustomFortuneItem(prize: prizes[index]!)
+                          child: CustomFortuneItem(prize: prizes[index]!),
+                          style: const FortuneItemStyle(
+                            color: orange2,
+                          ),
                         ),
                       ),
+                      onAnimationEnd: () {
+                        context.read<SpinWheelCubit>().setIsSpinning(false);
+                      },
                     ),
                     Positioned.fill(
                       child: Align(
@@ -103,7 +111,7 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
   }
 
   void _spinListener(BuildContext context, SpinWheelState state) {
-    if (state.currentPrize != null) {
+    if (state.isSpinning == false) {
       _showPrizeDialog(context, state);
       _playLottie(state.currentPrize!.lottie);
     }
