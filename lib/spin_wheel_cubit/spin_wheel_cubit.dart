@@ -10,7 +10,7 @@ class SpinWheelCubit extends Cubit<SpinWheelState> {
 
   final Map<int, Prize> prizes = {
     1: Prize(asset: heart, multiplier: 1, name: 'live', lottie: LottieType.common),
-    2: Prize(asset: crown, multiplier: 1, name: 'Jackpot', lottie: LottieType.golden),
+    2: Prize(asset: crown, multiplier: 1, name: 'jackpot', lottie: LottieType.golden),
     3: Prize(asset: diamond, multiplier: 1, name: 'diamond', lottie: LottieType.coins),
     4: Prize(asset: heart, multiplier: 4, name: 'lives', lottie: LottieType.common),
     5: Prize(asset: flash, multiplier: 4, name: 'powers', lottie: LottieType.common),
