@@ -14,7 +14,7 @@
 
 ## Features
 
-- Spin wheel (flutter_spinning_wheel package)
+- Spin The Wheel (flutter_spinning_wheel package)
 - Different lotties effects based on the prize type
 
 ## Demo
