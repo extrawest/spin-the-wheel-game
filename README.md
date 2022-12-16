@@ -4,10 +4,11 @@
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)]()
 ![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
 ![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue)
+[![View DEMO](https://img.shields.io/badge/VIEW-DEMO-lightgreen.svg)](https://lucky-spinwheel-game.web.app/)
 
 ## PROJECT INFO
 
-- **Spacescape based on Flutter v3.3.9**
+- **Spin The Wheel Game based on Flutter v3.3.9**
 - **Game is properly working on Android, iOS and WEB**
 
 
@@ -25,7 +26,7 @@
 **1) Clone this repo to your folder:**
 
 ```
-git clone https://gitlab.extrawest.com/i-training/flutter/spin-wheel-game.git
+git clone https://github.com/extrawest/spin-the-wheel-game.git
 ```
 
 **2. Change current directory to the cloned folder:**
