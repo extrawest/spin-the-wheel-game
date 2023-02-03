@@ -36,9 +36,12 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
 
   @override
   void initState() {
-    _defaultLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
-    _coinsLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
-    _goldenConfettiLottieController = AnimationController(vsync: this)..duration = const Duration(seconds: 3);
+    _defaultLottieController = AnimationController(vsync: this)
+      ..duration = const Duration(seconds: 3);
+    _coinsLottieController = AnimationController(vsync: this)
+      ..duration = const Duration(seconds: 3);
+    _goldenConfettiLottieController = AnimationController(vsync: this)
+      ..duration = const Duration(seconds: 3);
 
     super.initState();
   }
@@ -57,18 +60,21 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
     return Provider<StreamController<int>>(
       create: (context) => _fortuneWheelNotifier,
       builder: (context, child) => Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           BlocConsumer<SpinWheelCubit, SpinWheelState>(
             listenWhen: (prev, curr) => prev.isSpinning != curr.isSpinning,
             listener: _spinListener,
             builder: (context, state) => ConstrainedBox(
               constraints: const BoxConstraints(
-                maxHeight: _wheelDiameter,
+                maxHeight: _wheelDiameter - 100,
                 minWidth: _wheelDiameter,
-                minHeight: _wheelDiameter,
+                maxWidth: _wheelDiameter,
+                minHeight: _wheelDiameter - 100,
               ),
               child: AbsorbPointer(
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
                     FortuneWheel(
                       animateFirst: false,
@@ -189,7 +195,9 @@ class _CustomSpinningWheelState extends State<CustomSpinningWheel> with TickerPr
 
   void _playLottie(LottieType lottie) {
     if (lottie.isGolden) {
-      _goldenConfettiLottieController.forward().then((value) => _goldenConfettiLottieController.reset());
+      _goldenConfettiLottieController
+          .forward()
+          .then((value) => _goldenConfettiLottieController.reset());
     } else if (lottie.isCoins) {
       _coinsLottieController.forward().then((value) => _coinsLottieController.reset());
     } else if (lottie.isCommon) {
