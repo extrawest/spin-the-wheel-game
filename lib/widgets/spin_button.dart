@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_cubit.dart';
 import 'package:spin_wheel_game/spin_wheel_cubit/spin_wheel_state.dart';
+import 'package:spin_wheel_game/utils.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class SpinButton extends StatefulWidget {
@@ -24,8 +26,10 @@ class _SpinButtonState extends State<SpinButton> {
         onTap: state.isSpinning
             ? null
             : () {
-                context.read<StreamController<double>>().sink.add(context.read<SpinWheelCubit>().generateRandomVelocity());
+                final random = Fortune.randomInt(0, prizes.length - 1);
+                context.read<StreamController<int>>().sink.add(random);
                 context.read<SpinWheelCubit>().setIsSpinning(true);
+                context.read<SpinWheelCubit>().setPrize(random);
               },
         child: MouseRegion(
           cursor: _isHovered ? SystemMouseCursors.click : SystemMouseCursors.basic,

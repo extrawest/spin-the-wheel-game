@@ -20,14 +20,9 @@ class SpinWheelGame extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(fortuneWheelTitle),
+              Image.asset(fortuneWheelTitle, width: 500),
               const SizedBox(height: 24),
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 500,
-                ),
-                child: const CustomSpinningWheel(),
-              ),
+              const CustomSpinningWheel(),
             ],
           ),
         ),

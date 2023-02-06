@@ -6,6 +6,7 @@ const spinButtonPressed = 'assets/images/spin_button_pressed.png';
 const spinningWheel = 'assets/images/spin_wheel.png';
 const spinningWheelFilled = 'assets/images/spin_wheel_filled.png';
 const spinningPointer = 'assets/images/pointer.png';
+const wheelBorder = 'assets/images/wheel_border.png';
 
 const congratsText = 'assets/images/congrats.png';
 const okButton = 'assets/images/ok_button.png';
@@ -17,7 +18,9 @@ const flash = 'assets/images/flash.png';
 const dollar = 'assets/images/dollar.png';
 const diamond = 'assets/images/diamond.png';
 const crown = 'assets/images/crown.png';
+const darkCrown = 'assets/images/dark_crown.png';
 const jackPot = 'assets/images/jackpot.png';
+const jackpotBg = 'assets/images/jackpot_bg.png';
 
 /// Lotties
 const defaultLottie = 'assets/lotties/default_lottie.json';

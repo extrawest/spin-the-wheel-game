@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spin_wheel_game/assets.dart';
 import 'package:spin_wheel_game/models/prize.dart';
+import 'package:spin_wheel_game/models/prize_type.dart';
 import 'package:spin_wheel_game/theme.dart';
 import 'package:spin_wheel_game/widgets/gradient_text.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -92,7 +93,7 @@ class _PrizeDialogState extends State<PrizeDialog> with TickerProviderStateMixin
             ),
             const SizedBox(height: 8),
             GradientText(
-              widget.isJackpot ? widget.prize.name : widget.prize.description,
+              widget.isJackpot ? widget.prize.prizeType.prizeToString() : widget.prize.description,
               style: TextStyles.bodyReg20,
               gradient: const LinearGradient(
                 begin: Alignment.topCenter,
